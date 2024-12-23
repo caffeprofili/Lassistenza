@@ -13,6 +13,8 @@ import { Products } from './collections/Products'
 import { Categories } from './collections/Categories'
 import { Tags } from './collections/Tags'
 import { Imports } from './collections/Imports'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { generateTitle, generateURL } from './lib/generate-meta'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -44,6 +46,10 @@ export default buildConfig({
   },
   sharp,
   plugins: [
+    seoPlugin({
+      generateTitle,
+      generateURL,
+    }),
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
