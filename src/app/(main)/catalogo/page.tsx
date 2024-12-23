@@ -10,8 +10,17 @@ import { Suspense } from 'react'
 import { apiClient } from '@/lib/api-client'
 import { z } from 'zod'
 import { Where } from 'payload'
+import { Metadata } from 'next'
 
-export const revalidate = 0
+export const dynamic = 'force-static'
+export const revalidate = 600
+
+export function generateMetadata(): Metadata {
+  return {
+    title: `Catalogo | L'Assistenza`,
+    description: "L'Assistenza - Vendita attrezzature usate, sicure e garantite",
+  }
+}
 
 type PageProps = {
   searchParams: Promise<Record<string, string>>
@@ -19,8 +28,8 @@ type PageProps = {
 }
 
 const CatalogoPage = async (props: PageProps) => {
-  const categories = getAllCategories()
   const searchParams = await props.searchParams
+  const categories = getAllCategories()
   const products = getProducts(searchParams)
   return (
     <Container className="flex items-start py-12 max-md:flex-col">

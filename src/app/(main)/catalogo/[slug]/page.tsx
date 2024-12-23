@@ -9,7 +9,7 @@ import { FileIcon } from 'lucide-react'
 import { price } from '@/lib/utils'
 import { Media } from '@/payload-types'
 import RichText from '@/components/extensive/richtext'
-import { RequestProductInfo } from '@/components/modules/products/request-product-info'
+import { RequestProductInfo } from '@/components/modules/contact/request-product-info'
 import { Metadata } from 'next'
 import { generateMeta } from '@/lib/generate-meta'
 

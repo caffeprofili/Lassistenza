@@ -3,9 +3,14 @@ import { CategoriesGrid } from '@/components/modules/category/categories-grid'
 
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: "Home - L'Assistenza",
-  description: "L'Assistenza - Vendita attrezzature usate, sicure e garantite",
+export const dynamic = 'force-static'
+export const revalidate = 600
+
+export function generateMetadata(): Metadata {
+  return {
+    title: `Home | L'Assistenza`,
+    description: "L'Assistenza - Vendita attrezzature usate, sicure e garantite",
+  }
 }
 
 export default function Home() {
