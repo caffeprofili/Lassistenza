@@ -10,9 +10,6 @@ import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { getAllCategories, getProducts } from '@/lib/queries'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
-
 export function generateMetadata(): Metadata {
   return {
     title: `Catalogo | L'Assistenza`,
