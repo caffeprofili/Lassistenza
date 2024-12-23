@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { CatalogoMenuList } from './menu-list'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getAllCategories } from '@/app/(main)/catalogo/page'
+import { getAllCategories } from '@/lib/queries'
 
 export async function CatalogoNavigation(props: { promise: ReturnType<typeof getAllCategories> }) {
   return (

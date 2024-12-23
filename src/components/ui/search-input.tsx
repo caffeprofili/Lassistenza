@@ -1,24 +1,27 @@
-"use client";
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/display-name */
+'use client'
 
-import * as React from "react";
-import { useQueryState } from "nuqs";
-import { useDebouncedCallback } from "use-debounce";
-import { Input, type InputProps } from "./input";
+import * as React from 'react'
+import { useQueryState } from 'nuqs'
+import { useDebouncedCallback } from 'use-debounce'
+import { Input, type InputProps } from './input'
 
 export const SearchInput = React.forwardRef<
   HTMLInputElement,
   InputProps & {
-    name: string;
+    name: string
   }
 >((props, ref) => {
   const [searchQuery, setSearchQuery] = useQueryState(props.name, {
-    defaultValue: "",
+    defaultValue: '',
     shallow: false,
     clearOnDefault: true,
-  });
+  })
+
   const useDebounced = useDebouncedCallback((v) => {
-    return setSearchQuery(v);
-  }, 300);
+    return setSearchQuery(v)
+  }, 300)
 
   return (
     <Input
@@ -29,5 +32,5 @@ export const SearchInput = React.forwardRef<
       onChange={(e) => useDebounced(e.target.value)}
       {...props}
     />
-  );
-});
+  )
+})

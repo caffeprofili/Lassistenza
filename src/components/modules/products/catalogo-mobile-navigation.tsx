@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 import { CatalogoMenuList } from './menu-list'
 import { SheetClose, SheetFooter } from '@/components/ui/sheet'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { getAllCategories } from '@/app/(main)/catalogo/page'
+import { getAllCategories } from '@/lib/queries'
 
 const Sheet = dynamic(
   async () => {

@@ -2,7 +2,7 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProductCard } from './product-card'
 import { use } from 'react'
-import { getProducts } from '@/app/(main)/catalogo/page'
+import { getProducts } from '@/lib/queries'
 
 type CatalogoProductListProps = {
   promise: ReturnType<typeof getProducts>

@@ -1,7 +1,7 @@
 'use client'
-import { getAllCategories } from '@/app/(main)/catalogo/page'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { getAllCategories } from '@/lib/queries'
 import { cn } from '@/lib/utils'
 import { Category, Tag } from '@/payload-types'
 import Link from 'next/link'

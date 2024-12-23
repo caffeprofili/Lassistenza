@@ -25,7 +25,7 @@ export const MobileNav = () => {
         // closeIconClassname="text-primary-foreground"
       >
         <SheetHeader>
-          <SheetTitle className="text-primary-foreground">L'Assistenza</SheetTitle>
+          <SheetTitle className="text-primary-foreground">L&apos;Assistenza</SheetTitle>
           <SheetDescription className="text-primary-foreground">
             Vendita attrezzature usate, sicure e garantite
           </SheetDescription>

@@ -19,7 +19,7 @@ export default function Home() {
       <Banner src="/assets/home-banner.png" className="flex justify-center items-center">
         <h1 className="max-w-[800px] text-primary-foreground flex flex-col gap-1">
           <span className="uppercase md:text-[50px] text-[34px] font-bold text-center">
-            L'Assistenza
+            L&apos;Assistenza
           </span>
           <span className="uppercase md:text-[20px] text-[16px] font-semibold text-center">
             Vendita attrezzature usate, sicure e garantite

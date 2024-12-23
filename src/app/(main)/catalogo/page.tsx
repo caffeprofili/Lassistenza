@@ -7,10 +7,8 @@ import {
   CatalogoProductListSkeleton,
 } from '@/components/modules/products/catalogo-product-list'
 import { Suspense } from 'react'
-import { apiClient } from '@/lib/api-client'
-import { z } from 'zod'
-import { Where } from 'payload'
 import { Metadata } from 'next'
+import { getAllCategories, getProducts } from '@/lib/queries'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -57,49 +55,6 @@ const CatalogoPage = async (props: PageProps) => {
       </Container>
     </Container>
   )
-}
-
-export async function getAllCategories() {
-  const client = await apiClient()
-  const categories = await client.find({
-    collection: 'categories',
-    limit: 500,
-    draft: false,
-  })
-
-  return categories.docs
-}
-
-export async function getProducts(search: unknown) {
-  const { data: searchParams } = z
-    .object({
-      name: z.string().optional(),
-      warehouseId: z.string().optional(),
-      tags: z.string().optional(),
-      category: z.string().optional(),
-    })
-    .safeParse(search)
-
-  const client = await apiClient()
-
-  const where: Where = {
-    and: [
-      { _status: { equals: 'published' } },
-      searchParams?.category ? { category: { equals: Number(searchParams.category) } } : {},
-      searchParams?.name ? { name: { contains: searchParams.name } } : {},
-      searchParams?.warehouseId ? { warehouseId: { contains: searchParams.warehouseId } } : {},
-      searchParams?.tags ? { tags: { in: searchParams.tags.split('.') } } : {},
-    ],
-  }
-
-  const products = await client.find({
-    collection: 'products',
-    limit: 500,
-    draft: false,
-    where,
-  })
-
-  return products
 }
 
 export default CatalogoPage

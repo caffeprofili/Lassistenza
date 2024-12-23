@@ -12,6 +12,7 @@ import RichText from '@/components/extensive/richtext'
 import { RequestProductInfo } from '@/components/modules/contact/request-product-info'
 import { Metadata } from 'next'
 import { generateMeta } from '@/lib/generate-meta'
+import { getProductBySlug } from '@/lib/queries'
 
 type Args = { params: Promise<{ slug?: string }> }
 
@@ -35,21 +36,6 @@ export async function generateStaticParams() {
   })
 
   return params
-}
-
-export async function getProductBySlug(slug?: string) {
-  if (!slug) return null
-  const client = await apiClient()
-  const products = await client.find({
-    collection: 'products',
-    draft: false,
-    limit: 1,
-    where: {
-      and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }],
-    },
-  })
-
-  return products.docs[0]
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
