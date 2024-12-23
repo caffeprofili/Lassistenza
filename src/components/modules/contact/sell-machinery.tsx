@@ -14,15 +14,7 @@ import { PlusIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import { cn, formatBytes } from '@/lib/utils'
 import { ScrollArea } from '@/components/ui/scroll-area'
-
-export const SellMachineFormSchema = z.object({
-  nome: z.string().min(1, 'Obbligatorio'),
-  cognome: z.string().min(1, 'Obbligatorio'),
-  email: z.string().email('Email invalida.').min(1, 'Obbligatorio'),
-  telefono: z.string().optional(),
-  messaggio: z.string().min(1, 'Obbligatorio'),
-  attachments: z.any(),
-})
+import { SellMachineFormSchema } from './schema'
 
 const Sheet = dynamic(
   async () => {
@@ -78,7 +70,7 @@ export const SellMachinery = () => {
 
   const onSubmit = async (data: z.infer<typeof SellMachineFormSchema>) => {
     startTransition(async () => {
-      const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/mail/vendi-usato', {
+      const res = await fetch('/api/mail/vendi-usato', {
         method: 'POST',
         body: JSON.stringify(data),
       })

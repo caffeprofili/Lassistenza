@@ -7,9 +7,7 @@ import { useState } from 'react'
 
 export const ProductImages = (product: Product) => {
   const thumbnail =
-    product.images?.[0].image || typeof product.category === 'object'
-      ? (product.category as Category).image
-      : '/assets/placeholder.png'
+    product.images?.[0]?.image || (product.category as Category)?.image || '/assets/placeholder.png'
 
   const [selectedImage, setSelectedImage] = useState<IMedia | string | number>(thumbnail)
   return (

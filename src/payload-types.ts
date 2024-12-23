@@ -214,10 +214,11 @@ export interface Product {
   };
   slug?: string | null;
   slugLock?: boolean | null;
-  category: number | Category;
+  category?: (number | null) | Category;
   tags?: (number | Tag)[] | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -492,6 +493,7 @@ export interface ProductsSelect<T extends boolean = true> {
   tags?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

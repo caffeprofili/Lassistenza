@@ -1,4 +1,3 @@
-import { slugField } from '@/fields/slug'
 import type { CollectionConfig } from 'payload'
 
 export const Imports: CollectionConfig = {
@@ -7,8 +6,13 @@ export const Imports: CollectionConfig = {
     singular: 'Storico',
     plural: 'Storico',
   },
+  access: {
+    create: () => false,
+    update: () => false,
+  },
   admin: {
     useAsTitle: 'id',
+    defaultColumns: ['id', 'status', 'createdAt'],
   },
   fields: [
     {

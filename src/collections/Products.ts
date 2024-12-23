@@ -140,7 +140,6 @@ export const Products: CollectionConfig = {
         position: 'sidebar',
       },
       relationTo: 'categories',
-      required: true,
     },
     {
       label: 'Tags',

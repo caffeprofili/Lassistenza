@@ -10,16 +10,7 @@ import { Form } from '@/components/ui/form'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Product } from '@/payload-types'
 import { FormFields } from '@/components/ui/form-fields'
-
-export const RequestProductInfoFormSchema = z.object({
-  nome: z.string().min(1, 'Obbligatorio'),
-  cognome: z.string().min(1, 'Obbligatorio'),
-  email: z.string().email('Email invalida.').min(1, 'Obbligatorio'),
-  telefono: z.string().optional(),
-  messaggio: z.string().min(1, 'Obbligatorio'),
-  nome_prodotto: z.string().min(1, 'Obbligatorio'),
-  codice_prodotto: z.string().min(1, 'Obbligatorio'),
-})
+import { RequestProductInfoFormSchema } from './schema'
 
 const Sheet = dynamic(
   async () => {

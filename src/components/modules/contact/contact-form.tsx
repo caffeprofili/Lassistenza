@@ -7,14 +7,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-
-export const ContactFormSchema = z.object({
-  nome: z.string().min(1, 'Obbligatorio'),
-  cognome: z.string().min(1, 'Obbligatorio'),
-  email: z.string().email('Email invalida.').min(1, 'Obbligatorio'),
-  telefono: z.string().optional(),
-  messaggio: z.string().min(1, 'Obbligatorio'),
-})
+import { ContactFormSchema } from './schema'
 
 export const ContactForm = () => {
   const [isPending, startTransition] = useTransition()
@@ -26,7 +19,7 @@ export const ContactForm = () => {
 
   async function handleContact(data: z.infer<typeof ContactFormSchema>) {
     startTransition(async () => {
-      const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/mail/contact', {
+      const res = await fetch('/api/mail/contact', {
         method: 'POST',
         body: JSON.stringify(data),
       })

@@ -1,17 +1,13 @@
-import Image from 'next/image'
 // import { StarRating } from "./star-rating"
 import { cn, price } from '@/lib/utils'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { Each } from '@/components/extensive/each'
 import { Category, Product } from '@/payload-types'
 import { Media } from '@/components/extensive/media'
 
 export const ProductCard = ({ className, ...product }: Product & { className?: string }) => {
   const thumbnail =
-    product.images?.[0].image || typeof product.category === 'object'
-      ? (product.category as Category).image
-      : '/assets/placeholder.png'
+    product.images?.[0]?.image || (product.category as Category)?.image || '/assets/placeholder.png'
 
   return (
     <Link href={`/catalogo/${product.slug}`} className="group">
