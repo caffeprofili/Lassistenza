@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Sliders } from 'lucide-react'
 import { Suspense } from 'react'
 import { CatalogoMenuList } from './menu-list'
-import { SheetClose, SheetFooter } from '@/components/ui/sheet'
+import { SheetClose, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { getAllCategories } from '@/lib/queries'
 

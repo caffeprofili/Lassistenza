@@ -21,7 +21,7 @@ const breakpoints = {
 
 // A base64 encoded image to use as a placeholder while the image is loading
 const placeholderBlur =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAuSURBVHgB7c5BAQAABAQw9I92nYjhsyVYJ9l6NPVMQEBAQEBAQEBAQEBAQEDgAKsEA6PP9jAMAAAAAElFTkSuQmCC'
+  'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAsSURBVHgB7c5BAQAABAQw9O+MFvfZEqz3VdBUmICAgICAgICAgICAgICAwAFNiAQ8oKLZewAAAABJRU5ErkJggg=='
 
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
@@ -53,7 +53,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    src = `${getClientSideURL()}${url}`
+    src = `${url}`
+    // src = `${getClientSideURL()}${url}`
   }
 
   const loading = loadingFromProps || 'lazy'

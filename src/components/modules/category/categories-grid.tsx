@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Suspense } from 'react'
@@ -37,7 +36,7 @@ const Categorie = async () => {
                 imgClassName="size-32 text-destructive transition-all duration-300 group-hover:-translate-y-1"
                 priority={false}
                 loading="lazy"
-                resource={category.image || '/assets/placeholder.png'}
+                resource={category.image || '/assets/placeholder.svg'}
               />
             </div>
           </Link>

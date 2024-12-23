@@ -29,6 +29,7 @@ async function getRelatedProducts(product: Product) {
           },
         },
         { id: { not_equals: product.id } },
+        { _status: { equals: 'published' } },
       ],
     },
   })

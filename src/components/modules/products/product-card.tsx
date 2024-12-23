@@ -1,13 +1,12 @@
-// import { StarRating } from "./star-rating"
 import { cn, price } from '@/lib/utils'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { Category, Product } from '@/payload-types'
 import { Media } from '@/components/extensive/media'
+import Image from 'next/image'
 
 export const ProductCard = ({ className, ...product }: Product & { className?: string }) => {
-  const thumbnail =
-    product.images?.[0]?.image || (product.category as Category)?.image || '/assets/placeholder.png'
+  const thumbnail = product.images?.[0]?.image || (product.category as Category)?.image
 
   return (
     <Link href={`/catalogo/${product.slug}`} className="group">
@@ -29,12 +28,16 @@ export const ProductCard = ({ className, ...product }: Product & { className?: s
           })}
         </div>
         <div className="flex-1 p-6 pb-0 flex justify-center items-center bg-primary-foreground">
-          <Media
-            imgClassName="h-[150px] w-auto mx-auto p-4"
-            priority={false}
-            loading="lazy"
-            resource={thumbnail}
-          />
+          {thumbnail && typeof thumbnail === 'object' ? (
+            <Media
+              imgClassName="h-[150px] w-auto mx-auto p-4"
+              priority={false}
+              loading="lazy"
+              resource={thumbnail}
+            />
+          ) : (
+            <Image src={'/assets/placeholder.svg'} alt={product.name} width={150} height={150} />
+          )}
         </div>
         <div className="bg-gray-50 p-4 space-y-2">
           <h5 className="text-primary font-bold">{product.name}</h5>
