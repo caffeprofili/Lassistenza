@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+const { fontFamily } = require('tailwindcss/defaultTheme')
 
 import tailwindcssAnimate from 'tailwindcss-animate'
 
@@ -12,6 +13,16 @@ const config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        sm: '0.9rem',
+        xs: '0.8rem',
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+      boxShadow: {
+        DEFAULT: '0px 10px 15px -3px rgba(0,0,0,0.1)',
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
