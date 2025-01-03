@@ -13,6 +13,14 @@ export const Imports: CollectionConfig = {
   admin: {
     useAsTitle: 'id',
     defaultColumns: ['id', 'status', 'createdAt'],
+    components: {
+      beforeListTable: [
+        {
+          path: '/components/admin/warehouse-sync-button',
+          exportName: 'WarehouseSyncButton',
+        },
+      ],
+    },
   },
   fields: [
     {

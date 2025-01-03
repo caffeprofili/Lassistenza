@@ -15,6 +15,7 @@ import { Tags } from './collections/Tags'
 import { Imports } from './collections/Imports'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { generateTitle, generateURL } from './lib/generate-meta'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,6 +36,7 @@ export default buildConfig({
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI || '',
+      authToken: process.env.DATABASE_AUTH_TOKEN || '',
     },
   }),
   i18n: {
@@ -51,6 +53,18 @@ export default buildConfig({
       generateURL,
     }),
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET_NAME!,
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+        },
+        region: process.env.S3_REGION!,
+      },
+    }),
   ],
 })

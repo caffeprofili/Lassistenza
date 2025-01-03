@@ -9,7 +9,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      required: true,
+      defaultValue: 'immagine',
     },
   ],
   upload: {
@@ -24,22 +24,6 @@ export const Media: CollectionConfig = {
         name: 'square',
         width: 500,
         height: 500,
-      },
-      {
-        name: 'small',
-        width: 600,
-      },
-      {
-        name: 'medium',
-        width: 900,
-      },
-      {
-        name: 'large',
-        width: 1400,
-      },
-      {
-        name: 'xlarge',
-        width: 1920,
       },
       {
         name: 'og',
