@@ -11,6 +11,10 @@ export function WarehouseSyncButton() {
     startTransition(async () => {
       const response = await fetch('/api/warehouse-sync', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Key': process.env.UPLOAD_PRODUCTS_ACCESS_KEY!,
+        },
       })
       const data = await response.json()
       console.log(data)
