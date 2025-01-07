@@ -1,5 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
+import { syncWarehouseProducts } from '@/lib/warehouse-sync'
 import { Button } from '@payloadcms/ui'
 import { RotateCcwIcon } from 'lucide-react'
 import { useTransition } from 'react'
@@ -9,15 +10,8 @@ export function WarehouseSyncButton() {
 
   async function sync() {
     startTransition(async () => {
-      const response = await fetch('/api/warehouse-sync', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Access-Key': process.env.UPLOAD_PRODUCTS_ACCESS_KEY!,
-        },
-      })
-      const data = await response.json()
-      console.log(data)
+      const { uploadResponse } = await syncWarehouseProducts()
+      console.log(uploadResponse)
     })
   }
 

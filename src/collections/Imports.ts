@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 export const Imports: CollectionConfig = {
@@ -21,6 +22,13 @@ export const Imports: CollectionConfig = {
         },
       ],
     },
+  },
+  hooks: {
+    afterChange: [
+      () => {
+        revalidatePath('/admin/collections/imports')
+      },
+    ],
   },
   fields: [
     {

@@ -106,6 +106,8 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
 }
 
 export async function sendAddedProductsNotification(diff: DiffResponse) {
+  if (process.env.NODE_ENV === 'development') return
+
   if (diff.added.length === 0 && diff.updated.length === 0) return
   const client = await apiClient()
   const users = await client.find({
