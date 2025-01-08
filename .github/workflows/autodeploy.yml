@@ -1,0 +1,29 @@
+name: Auto Deploy
+on:
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: write # Allow write access to repository contents
+
+jobs:
+  empty_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Get the Latest Commit Branch
+        id: get_branch
+        run: echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+
+      - name: Create Empty Commit
+        run: |
+          git config --local user.name "caffeprofili"
+          git config --local user.email "vercel@caffeprofili.it"
+          git commit --allow-empty -m "Auto commit after push"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
