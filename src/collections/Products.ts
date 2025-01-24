@@ -15,6 +15,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { revalidatePath } from 'next/cache'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -157,6 +158,14 @@ export const Products: CollectionConfig = {
       relationTo: 'tags',
     },
   ],
+  hooks: {
+    afterChange: [
+      () => {
+        revalidatePath('/(main)/catalogo')
+        revalidatePath('/(main)/catalogo/[slug]', 'page')
+      },
+    ],
+  },
   versions: {
     drafts: {
       autosave: {

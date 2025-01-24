@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 import { serializeLexical } from './serialize'
@@ -20,6 +19,8 @@ const RichText: React.FC<Props> = ({
   if (!content) {
     return null
   }
+
+  console.log(content)
 
   return (
     <div
