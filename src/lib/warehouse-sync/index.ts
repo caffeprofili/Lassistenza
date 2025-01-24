@@ -32,6 +32,8 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
     const client = await apiClient()
     const products = articlesToProducts(articles)
 
+    console.log('PRODUCTS: ', products.length)
+
     const _dbProducts = await client.find({
       collection: 'products',
       pagination: false,
@@ -41,6 +43,8 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
         name: true,
       },
     })
+
+    console.log('DB PRODUCTS: ', _dbProducts.docs.length)
 
     const dbProducts = _dbProducts.docs
 
