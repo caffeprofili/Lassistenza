@@ -8,11 +8,14 @@ import { apiClient } from '../api-client'
 export async function syncWarehouseProducts() {
   const client = await apiClient()
   const articles = await getWarehouseArticles()
+  console.log('Articles: ', articles.length)
   const res = await uploadWarehouseProducts(articles)
+  console.log('Upload Res: ', res.status)
   const newProductImport = await client.create({
     collection: 'imports',
     data: { status: res.status, error: res.message, diff: res.diff },
   })
+  console.log('New Product Import: ', newProductImport.id)
   await sendAddedProductsNotification(res.diff)
   return {
     importResponse: newProductImport,
