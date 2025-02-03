@@ -48,7 +48,11 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
 
     const _diff = diff(dbProducts, products)
 
-    const transactionID = await client.db.beginTransaction()
+    console.log('ADDED: ', _diff.added.length)
+    console.log('UPDATED: ', _diff.updated.length)
+    console.log('REMOVED: ', _diff.removed.length)
+
+    // const transactionID = await client.db.beginTransaction()
 
     const inserted: { name: string; warehouseId: string }[] = []
     try {
@@ -57,14 +61,14 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
           collection: 'products',
           where: { warehouseId: { equals: p.warehouseId } },
           data: { slug: slug(`${p.name}-${p.warehouseId}`) },
-          req: { transactionID: transactionID! },
+          // req: { transactionID: transactionID! },
         })
       }
 
       await client.delete({
         collection: 'products',
         where: { warehouseId: { in: _diff.removed.map((p) => p.warehouseId) } },
-        req: { transactionID: transactionID! },
+        // req: { transactionID: transactionID! },
       })
 
       for (const p of _diff.added) {
@@ -76,14 +80,15 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
             slug: slug(`${p.name}-${p.warehouseId}`),
             price: 0,
           },
-          req: { transactionID: transactionID! },
+          // req: { transactionID: transactionID! },
         })
 
         inserted.push({ name: res.name, warehouseId: res.warehouseId })
       }
-      await client.db.commitTransaction(transactionID!)
+      // await client.db.commitTransaction(transactionID!)
     } catch (err) {
-      await client.db.rollbackTransaction(transactionID!)
+      console.log(err)
+      // await client.db.rollbackTransaction(transactionID!)
     }
 
     const duplicates = _diff.added
