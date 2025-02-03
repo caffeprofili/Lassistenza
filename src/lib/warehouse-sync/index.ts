@@ -57,19 +57,22 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
     const inserted: { name: string; warehouseId: string }[] = []
     try {
       for (const p of _diff.updated) {
-        await client.update({
+        const updated = await client.update({
           collection: 'products',
           where: { warehouseId: { equals: p.warehouseId } },
           data: { slug: slug(`${p.name}-${p.warehouseId}`) },
           // req: { transactionID: transactionID! },
         })
+        console.log(`UPDATED ${p.warehouseId}`, !!updated.docs.length)
       }
 
-      await client.delete({
+      const deleted = await client.delete({
         collection: 'products',
         where: { warehouseId: { in: _diff.removed.map((p) => p.warehouseId) } },
         // req: { transactionID: transactionID! },
       })
+
+      console.log('DELETED: ', deleted.docs.length)
 
       for (const p of _diff.added) {
         const res = await client.create({
@@ -82,6 +85,8 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
           },
           // req: { transactionID: transactionID! },
         })
+
+        console.log(`ADDED ${p.warehouseId}`, !!res.id)
 
         inserted.push({ name: res.name, warehouseId: res.warehouseId })
       }
