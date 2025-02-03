@@ -44,8 +44,6 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
       },
     })
 
-    console.log('DB PRODUCTS: ', _dbProducts.docs.length)
-
     const dbProducts = _dbProducts.docs
 
     const _diff = diff(dbProducts, products)
@@ -82,9 +80,8 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
         })
 
         inserted.push({ name: res.name, warehouseId: res.warehouseId })
-
-        await client.db.commitTransaction(transactionID!)
       }
+      await client.db.commitTransaction(transactionID!)
     } catch (err) {
       await client.db.rollbackTransaction(transactionID!)
     }
