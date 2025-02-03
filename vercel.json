@@ -3,11 +3,5 @@
     "src/app/**/*": {
       "maxDuration": 59
     }
-  },
-  "crons": [
-    {
-      "path": "/api/warehouse-sync",
-      "schedule": "0 13 * * *"
-    }
-  ]
+  }
 }
