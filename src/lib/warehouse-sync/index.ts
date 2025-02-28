@@ -66,13 +66,13 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
       //   console.log(`UPDATED ${p.warehouseId}`, !!updated.docs.length)
       // }
 
-      const deleted = await client.delete({
-        collection: 'products',
-        where: { warehouseId: { in: _diff.removed.map((p) => p.warehouseId) } },
-        req: { transactionID: transactionID! },
-      })
+      // const deleted = await client.delete({
+      //   collection: 'products',
+      //   where: { warehouseId: { in: _diff.removed.map((p) => p.warehouseId) } },
+      //   req: { transactionID: transactionID! },
+      // })
 
-      console.log('DELETED: ', deleted.docs.length)
+      // console.log('DELETED: ', deleted.docs.length)
 
       for (const p of _diff.added) {
         const res = await client.create({
@@ -86,7 +86,7 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
           req: { transactionID: transactionID! },
         })
 
-        console.log(`ADDED ${p.warehouseId}`, !!res.id)
+        // console.log(`ADDED ${p.warehouseId}`, !!res.id)
 
         inserted.push({ name: res.name, warehouseId: res.warehouseId })
       }
@@ -145,6 +145,18 @@ export async function sendAddedProductsNotification(diff: DiffResponse) {
       <p>Lista prodotti aggiunti:</p>
       <ul>
         ${diff.added
+          .map(
+            (p) =>
+              `<a href="https://lassistenzausato.net/admin/products/${slug(
+                p.name,
+              )}">${p.name} - ${p.warehouseId}</a>`,
+          )
+          .join('<br/>')}
+      </ul>
+      <br />
+      <p>Lista prodotti RIMOSSI (Richiede azione manuale):</p>
+      <ul>
+        ${diff.removed
           .map(
             (p) =>
               `<a href="https://lassistenzausato.net/admin/products/${slug(
