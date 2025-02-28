@@ -1,6 +1,6 @@
 'use server'
-import { WarehouseArticle, DiffResponse, FormattedArticle } from './types'
-import { articlesToProducts, diff, slug } from './utils'
+import { WarehouseArticle, DiffResponse } from './types'
+import { articlesToProducts, slug } from './utils'
 import { sendMail } from '@/lib/mailjet'
 import { getWarehouseArticles } from './data'
 import { apiClient } from '../api-client'
@@ -28,92 +28,71 @@ export async function uploadWarehouseProducts(articles: WarehouseArticle[]): Pro
   status: string
   message: string | null
 }> {
+  const client = await apiClient()
+  const products = articlesToProducts(articles)
+
+  const ids = products.map((p) => p.warehouseId)
+
+  // Get all existing products from DB
+  const existingProducts = await client.find({
+    collection: 'products',
+    pagination: false,
+    limit: 1000,
+    select: {
+      warehouseId: true,
+      name: true,
+    },
+  })
+
+  // Find products to delete (exist in DB but not in new ids)
+  const toDelete = existingProducts.docs.filter((p) => !ids.includes(p.warehouseId))
+
+  // Find products to add (exist in new ids but not in DB)
+  const existingIds = existingProducts.docs.map((p) => p.warehouseId)
+  const toAdd = products.filter((p) => !existingIds.includes(p.warehouseId))
+
+  // Start transaction
+  const transactionID = await client.db.beginTransaction()
+
   try {
-    const client = await apiClient()
-    const products = articlesToProducts(articles)
-
-    console.log('PRODUCTS: ', products.length)
-
-    const _dbProducts = await client.find({
-      collection: 'products',
-      pagination: false,
-      limit: 1000,
-      select: {
-        warehouseId: true,
-        name: true,
-      },
-    })
-
-    const dbProducts = _dbProducts.docs
-
-    const _diff = diff(dbProducts, products)
-
-    console.log('ADDED: ', _diff.added.length)
-    console.log('UPDATED: ', _diff.updated.length)
-    console.log('REMOVED: ', _diff.removed.length)
-
-    const transactionID = await client.db.beginTransaction()
-
-    const inserted: { name: string; warehouseId: string }[] = []
-    try {
-      // for (const p of _diff.updated) {
-      //   const updated = await client.update({
-      //     collection: 'products',
-      //     where: { warehouseId: { equals: p.warehouseId } },
-      //     data: { slug: slug(`${p.name}-${p.warehouseId}`) },
-      //     req: { transactionID: transactionID! },
-      //   })
-      //   console.log(`UPDATED ${p.warehouseId}`, !!updated.docs.length)
-      // }
-
-      // const deleted = await client.delete({
-      //   collection: 'products',
-      //   where: { warehouseId: { in: _diff.removed.map((p) => p.warehouseId) } },
-      //   req: { transactionID: transactionID! },
-      // })
-
-      // console.log('DELETED: ', deleted.docs.length)
-
-      for (const p of _diff.added) {
-        const res = await client.create({
-          collection: 'products',
-          data: {
-            name: p.name,
-            warehouseId: p.warehouseId,
-            slug: slug(`${p.name}-${p.warehouseId}`),
-            price: 0,
+    // Delete old products
+    if (toDelete.length > 0) {
+      await client.delete({
+        collection: 'products',
+        where: {
+          warehouseId: {
+            in: toDelete.map((p) => p.warehouseId),
           },
-          req: { transactionID: transactionID! },
-        })
-
-        // console.log(`ADDED ${p.warehouseId}`, !!res.id)
-
-        inserted.push({ name: res.name, warehouseId: res.warehouseId })
-      }
-      await client.db.commitTransaction(transactionID!)
-    } catch (err) {
-      console.log(err)
-      await client.db.rollbackTransaction(transactionID!)
+        },
+        req: { transactionID: transactionID! },
+      })
     }
 
-    const duplicates = _diff.added
-      .map((a) => {
-        if (inserted.some((i) => i.warehouseId === a.warehouseId)) {
-          return null
-        }
-        return a
+    // Add new products
+    for (const p of toAdd) {
+      await client.create({
+        collection: 'products',
+        data: {
+          name: p.name,
+          warehouseId: p.warehouseId,
+          slug: slug(`${p.name}-${p.warehouseId}`),
+          price: 0,
+        },
+        req: { transactionID: transactionID! },
       })
-      .filter(Boolean) as FormattedArticle[]
-
+    }
+    await client.db.commitTransaction(transactionID!)
     return {
       status: 'SUCCESS',
       message: null,
-      diff: { ..._diff, added: inserted, duplicates },
+      diff: { added: toAdd, removed: toDelete, updated: [], duplicates: [] },
     }
-  } catch (error: any) {
+  } catch (err: any) {
+    console.error(err)
+    await client.db.rollbackTransaction(transactionID!)
     return {
       status: 'ERROR',
-      message: error.message,
+      message: err.message,
       diff: { added: [], removed: [], updated: [], duplicates: [] },
     }
   }

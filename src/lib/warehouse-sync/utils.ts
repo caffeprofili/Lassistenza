@@ -1,24 +1,5 @@
-import { ExistingProduct, FormattedArticle, WarehouseArticle } from './types'
+import { FormattedArticle, WarehouseArticle } from './types'
 import slugify from 'slugify'
-
-export function diff(_old: ExistingProduct[], _new: FormattedArticle[]) {
-  const oldIds = new Set(_old.map((item) => item.warehouseId))
-  const newIds = new Set(_new.map((item) => item.warehouseId))
-
-  const newItems = _new.filter((item) => !oldIds.has(item.warehouseId))
-  const oldItems = _old.filter((item) => !newIds.has(item.warehouseId))
-
-  const updatedItems = _new.filter((item) => {
-    const dbItem = _old.find((i) => i.warehouseId === item.warehouseId)
-    return dbItem && dbItem.name !== item.name
-  })
-
-  return {
-    added: newItems,
-    removed: oldItems,
-    updated: updatedItems,
-  }
-}
 
 export function articlesToProducts(articles: WarehouseArticle[]): FormattedArticle[] {
   return articles.map((article) => ({
