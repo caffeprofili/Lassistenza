@@ -39,7 +39,7 @@ const ContattiPage = () => {
                 <p className="text-sm">
                   Whatsapp:{' '}
                   <Link href="https://wa.me/3661901703" target="_blank" className="underline">
-                    334 2079324
+                    366 1901703
                   </Link>
                 </p>
               </div>
@@ -56,7 +56,7 @@ const ContattiPage = () => {
                 <p className="text-sm">
                   Whatsapp:{' '}
                   <Link href="https://wa.me/3661901703" target="_blank" className="underline">
-                    334 2079324
+                    366 1901703
                   </Link>
                 </p>
               </div>
