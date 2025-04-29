@@ -41,7 +41,7 @@ export const Footer = () => {
             </p>
             <p>
               Whatsapp:{" "}
-              <Link href="https://wa.me/3342079324" target="_blank">
+              <Link href="https://wa.me/3661901703" target="_blank">
                 334 2079324
               </Link>
             </p>

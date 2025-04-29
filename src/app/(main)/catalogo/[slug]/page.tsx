@@ -98,6 +98,7 @@ const ProductPage = async (props: Args) => {
             )}
             <h3 className="font-bold text-2xl font-price">{price(product.price)}</h3>
             <RequestProductInfo {...product} />
+            <p className="text-sm">Il costo della spedizione verrà calcolato al momento della richiesta. La spedizione è gratuita su tutta Roma.</p>
           </div>
         </div>
       </section>
