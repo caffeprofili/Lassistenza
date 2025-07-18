@@ -24,7 +24,7 @@ export async function sendMail({ to, subject, html, attachments }: SendMailParam
     Messages: [
       {
         From: {
-          Email: 'info@lassistenzausato.net',
+          Email: 'ordini@lassistenzausato.net',
           Name: "Sito Web - L'Assistenza",
         },
         To: Array.isArray(to) ? to.map((addr) => ({ Email: addr })) : [{ Email: to }],

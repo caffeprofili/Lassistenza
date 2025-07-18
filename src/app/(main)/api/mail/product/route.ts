@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   try {
     await sendMail({
       subject: 'Richiesta informazioni prodotto - Assistenza Usato',
-      to: 'info@lassistenza.net',
+      to: 'ordini@lassistenza.net',
       html: `
       <p>Tramite: "Richiesta informazioni prodotto"</p>
       <br/>

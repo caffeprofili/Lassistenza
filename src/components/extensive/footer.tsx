@@ -41,14 +41,14 @@ export const Footer = () => {
             </p>
             <p>
               Whatsapp:{" "}
-              <Link href="https://wa.me/3661901703" target="_blank">
-                366 1901703
+              <Link href="https://wa.me/3292341594" target="_blank">
+                329 2341594
               </Link>
             </p>
           </div>
 
-          <Link href="mailto:info@lassistenzausato.net" className="block">
-            info@lassistenzausato.net
+          <Link href="mailto:ordini@lassistenzausato.net" className="block">
+            ordini@lassistenzausato.net
           </Link>
           <div className="flex lg:justify-end justify-center">
             <Button asChild variant="ghost" size="icon">

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Metadata } from 'next'
 import { Banner } from '@/components/extensive/banner'
 import { SellMachinery } from '@/components/modules/contact/sell-machinery'
+import { AlertCircle } from 'lucide-react'
 
 export const dynamic = 'force-static'
 
@@ -22,7 +23,7 @@ const VendiPage = () => {
           </span>
         </h1>
       </Banner>
-      <div className="py-12 pb-4">
+      <div className="pt-12 pb-4">
         <div className="flex-1 flex flex-col items-center -translate-y-20 gap-8 md:order-2 order-1">
           <div className="bg-card rounded-sm flex p-8 shadow max-w-4xl flex-col items-center sm:flex-row gap-12">
             <div className="flex flex-col space-y-6 max-w-md">
@@ -48,6 +49,12 @@ const VendiPage = () => {
             />
           </div>
         </div>
+      </div>
+      <div className="mb-12 p-4 max-w-3xl mx-auto bg-card rounded-sm shadow flex items-center gap-2">
+        <AlertCircle className="size-6 text-destructive" />
+        <p>
+          Non acquistiamo macchinari al di fuori della <span className="font-bold">Regione Lazio</span>.
+        </p>
       </div>
     </>
   )

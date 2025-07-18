@@ -9,6 +9,7 @@ import {
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { getAllCategories, getProducts } from '@/lib/queries'
+import { AlertCircle } from 'lucide-react'
 
 export function generateMetadata(): Metadata {
   return {
@@ -27,6 +28,7 @@ const CatalogoPage = async (props: PageProps) => {
   const categories = getAllCategories()
   const products = getProducts(searchParams)
   return (
+    <>
     <Container className="flex items-start py-12 max-md:flex-col">
       <CatalogoNavigation promise={categories} />
       <CatalogoMobileNavigation promise={categories} />
@@ -48,9 +50,16 @@ const CatalogoPage = async (props: PageProps) => {
         </section>
         <Suspense key={JSON.stringify(searchParams)} fallback={<CatalogoProductListSkeleton />}>
           <CatalogoProductList promise={products} />
-        </Suspense>
+          </Suspense>
+          <div className="mb-12 p-4 mx-auto bg-card rounded-sm shadow-sm flex items-center gap-2">
+            <AlertCircle className="size-6 text-destructive" />
+            <p className='font-medium'>
+              Fuori dalla Regione Lazio non c'è servizio di installazione.
+            </p>
+          </div>
       </Container>
-    </Container>
+      </Container>
+    </>
   )
 }
 

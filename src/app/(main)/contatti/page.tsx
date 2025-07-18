@@ -38,8 +38,8 @@ const ContattiPage = () => {
                 </p>
                 <p className="text-sm">
                   Whatsapp:{' '}
-                  <Link href="https://wa.me/3661901703" target="_blank" className="underline">
-                    366 1901703
+                  <Link href="https://wa.me/3292341594" target="_blank" className="underline">
+                    329 2341594
                   </Link>
                 </p>
               </div>
@@ -49,14 +49,14 @@ const ContattiPage = () => {
               <h3 className="font-medium text-sm text-primary">Scrivici</h3>
               <div className="space-y-1">
                 <p className="text-sm">
-                  <Link href="mailto:info@lassistenzausato.net" className="underline block">
-                    info@lassistenzausato.net
+                  <Link href="mailto:ordini@lassistenzausato.net" className="underline block">
+                    ordini@lassistenzausato.net
                   </Link>
                 </p>
                 <p className="text-sm">
                   Whatsapp:{' '}
-                  <Link href="https://wa.me/3661901703" target="_blank" className="underline">
-                    366 1901703
+                  <Link href="https://wa.me/3292341594" target="_blank" className="underline">
+                    329 2341594
                   </Link>
                 </p>
               </div>
