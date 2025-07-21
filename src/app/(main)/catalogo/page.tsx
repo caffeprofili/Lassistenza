@@ -54,7 +54,7 @@ const CatalogoPage = async (props: PageProps) => {
           <div className="mb-12 p-4 mx-auto bg-card rounded-sm shadow-sm flex items-center gap-2">
             <AlertCircle className="size-6 text-destructive" />
             <p className='font-medium'>
-              Fuori dalla Regione Lazio non c'è servizio di installazione.
+              Fuori dalla Regione Lazio non c&apos;è servizio di installazione.
             </p>
           </div>
       </Container>
